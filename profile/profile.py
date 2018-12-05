@@ -5,10 +5,12 @@ if __name__ == '__main__':
     import pstats
     
     text = '''<p>foo <img src="bar.jpg"> & stuff'''
+
     def foo():
         tidy_document(text, keep_doc=True)
+
     def bar():
-        for i in xrange(1000):
+        for i in range(1000):
             foo()
     
     cProfile.run('bar()', 'tidylib_profile.tmp')    

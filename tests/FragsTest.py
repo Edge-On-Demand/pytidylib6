@@ -1,30 +1,13 @@
-# -*- coding: utf-8 -*-
-# Copyright 2009 Jason Stitt
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+from __future__ import unicode_literals
 
 import unittest
+from builtins import str
+
 from tidylib import tidy_fragment
+
 
 class TestFrags1(unittest.TestCase):
     """ Test some sample fragment documents """
-    
     def test_frag_with_unclosed_tag(self):
         h = "<p>hello"
         expected = '''<p>
@@ -50,22 +33,20 @@ class TestFrags1(unittest.TestCase):
         self.assertEqual(doc, expected)
     
     def test_frag_with_unicode(self):
-        h = u"unicode string ß"
+        h = "unicode string ß"
         expected = h
         doc, err = tidy_fragment(h)
         self.assertEqual(doc, expected)
 
     def test_frag_with_unicode_subclass(self):
-        class MyUnicode(unicode):
+        class MyUnicode(str):
             pass
 
-        h = MyUnicode(u"unicode string ß")
+        h = MyUnicode("unicode string ß")
         expected = h
         doc, err = tidy_fragment(h)
         self.assertEqual(doc, expected)
-    
+
+
 if __name__ == '__main__':
     unittest.main()
-
-
-
